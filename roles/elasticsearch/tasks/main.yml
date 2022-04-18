@@ -1,0 +1,44 @@
+---
+# tasks file for elasticsearch
+- name: Update all packages to their latest version
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+- name: Installing the java version8
+  apt:
+    name: '{{ JDK_version  }}'
+- name: get apt repo key
+  apt_key:
+    url: '{{ public_signing_key  }}'
+    state: present
+- name: INSTALLING REQUIRED PACKAGES
+  apt:
+    pkg: '{{ packages }}'
+- name: Add elasticsearch repository
+  apt_repository:
+    repo: '{{ elasticsearch_repo }}'
+- name: install elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+    update_cache: yes
+# Replace default elasticsearch.yml
+
+- name: Replace default elasticsearch.yml
+  template:
+   src: elasticsearch.yml
+   dest: /etc/elasticsearch/elasticsearch.yml
+- name: Starting Elasticsearch
+  service:
+   name: elasticsearch
+   state: started
+   enabled: yes
+# Install a specific plugin in Elasticsearch >= 5.0
+- elasticsearch_plugin:
+    name: analysis-icu
+    state: present
+# RESTARTING ELATICSEARCH
+- name: Restart service ELASTIC SEARCH
+  service:
+    name: elasticsearch
+    state: restarted

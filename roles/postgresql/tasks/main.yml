@@ -1,0 +1,20 @@
+---
+# tasks file for postgresql
+- name: Update all packages to their latest version
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+- name: get apt repo key
+  apt_key:
+    url: '{{ public_signing_key  }}'
+    state: present
+- name: Add POSTGRESQL repository
+  apt_repository:
+    repo: '{{ postgresql_repo }}'
+- name: Update all packages to their latest version
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+- name: INSTALLING REQUIRED PACKAGES
+  apt:
+    pkg: '{{ packages }}'

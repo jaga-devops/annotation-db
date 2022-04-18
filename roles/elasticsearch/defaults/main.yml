@@ -1,0 +1,13 @@
+---
+# defaults file for elasticsearch
+JDK_version: openjdk-8-jdk
+public_signing_key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+packages: apt-transport-https
+elasticsearch_repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+cluster_name: demo
+node_name: node-1
+path_data: /var/lib/elasticsearch
+path_logs: /var/log/elasticsearch
+network_host: localhost
+http_port: 9200
+
